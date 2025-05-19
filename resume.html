@@ -309,6 +309,58 @@
       z-index: 1;
     }
     
+    /* Company links and tooltips */
+    .company-link {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      position: relative;
+    }
+    
+    .company-link:hover {
+      text-decoration: underline;
+    }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 250px;
+      background-color: var(--secondary-color);
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.85rem;
+      font-weight: normal;
+    }
+    
+    .tooltip .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--secondary-color) transparent transparent transparent;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
     /* Education section */
     .education-container {
       display: grid;
@@ -561,7 +613,10 @@
           <div class="timeline-content">
             <span class="timeline-date">August 2024 - Current</span>
             <h3>ADAS Embedded Software Engineer</h3>
-            <h4>Ford</h4>
+            <h4 class="tooltip">
+              <a href="https://www.ford.com/" target="_blank" class="company-link">Ford</a>
+              <span class="tooltip-text">Ford Motor Company is a global automotive manufacturer that designs, manufactures, markets, and services a full line of cars, trucks, SUVs, and electric vehicles.</span>
+            </h4>
             <p>Developing features to enhance vehicle safety and automation, owning features for Contextual Awareness and HMIA.</p>
           </div>
           <div class="timeline-dot"></div>
@@ -570,7 +625,10 @@
           <div class="timeline-content">
             <span class="timeline-date">May 2023 - May 2024</span>
             <h3>Software Engineering Intern</h3>
-            <h4>Cadence Design Systems</h4>
+            <h4 class="tooltip">
+              <a href="https://www.cadence.com/en_US/home.html" target="_blank" class="company-link">Cadence Design Systems</a>
+              <span class="tooltip-text">Cadence Design Systems is a leading electronic design automation software and engineering services company that develops software used to design integrated circuits, boards, and systems.</span>
+            </h4>
             <p>Enhanced Clarity 3D Solver tool performance and implemented a new search feature using Azure OpenAI and GPT.</p>
           </div>
           <div class="timeline-dot"></div>
@@ -579,7 +637,10 @@
           <div class="timeline-content">
             <span class="timeline-date">January 2023 - May 2023</span>
             <h3>Teaching Assistant</h3>
-            <h4>University of Wisconsin Milwaukee</h4>
+            <h4 class="tooltip">
+              <a href="https://uwm.edu/" target="_blank" class="company-link">University of Wisconsin Milwaukee</a>
+              <span class="tooltip-text">The University of Wisconsin-Milwaukee is a public urban research university offering 195+ degree programs across 15 schools and colleges, with a focus on research and innovation.</span>
+            </h4>
             <p>Taught system programming with Unix/Linux: system calls, file I/O, IPC, and debugging in C.</p>
           </div>
           <div class="timeline-dot"></div>
@@ -588,7 +649,10 @@
           <div class="timeline-content">
             <span class="timeline-date">August 2021 - August 2022</span>
             <h3>Software Engineer</h3>
-            <h4>Capgemini Engineering</h4>
+            <h4 class="tooltip">
+              <a href="https://www.capgemini.com/" target="_blank" class="company-link">Capgemini Engineering</a>
+              <span class="tooltip-text">Capgemini Engineering is a global leader in engineering and R&D services, providing expertise in digital transformation, product design, and manufacturing engineering across industries.</span>
+            </h4>
             <p>Collaborated with Adtran on networking equipment enhancements and deployed digitally signed firmware updates.</p>
           </div>
           <div class="timeline-dot"></div>
@@ -597,7 +661,10 @@
           <div class="timeline-content">
             <span class="timeline-date">October 2019 - July 2021</span>
             <h3>Software Engineer</h3>
-            <h4>Incedo</h4>
+            <h4 class="tooltip">
+              <a href="https://www.incedoinc.com/" target="_blank" class="company-link">Incedo</a>
+              <span class="tooltip-text">Incedo is a technology consulting and services firm specializing in data management, analytics, digital transformation, and product engineering solutions for various industries.</span>
+            </h4>
             <p>Worked with Belden on networking product development and implemented private VLAN capability.</p>
           </div>
           <div class="timeline-dot"></div>
