@@ -1,796 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vikash Kumar | ADAS Embedded Software Engineer</title>
-  <style>
-    :root {
-      --primary-color: #1a73e8;
-      --secondary-color: #2c3e50;
-      --light-bg: #f8f9fa;
-      --dark-bg: #2c3e50;
-      --text-color: #333;
-      --light-text: #f8f9fa;
-      --border-radius: 10px;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    body {
-      background-color: var(--light-bg);
-      color: var(--text-color);
-      line-height: 1.6;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    
-    /* Header styling */
-    header {
-      background-color: white;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-    
-    .logo-circle {
-      width: 40px;
-      height: 40px;
-      background-color: var(--primary-color);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-right: 10px;
-    }
-    
-    .nav-menu {
-      display: flex;
-      list-style: none;
-    }
-    
-    .nav-menu li {
-      margin-left: 30px;
-    }
-    
-    .nav-menu a {
-      text-decoration: none;
-      color: var(--text-color);
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    
-    .nav-menu a:hover, .nav-menu a.active {
-      color: var(--primary-color);
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    
-    /* Hero section */
-    .hero {
-      background-color: var(--primary-color);
-      color: white;
-      padding: 80px 0;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hero-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .hero-text {
-      flex: 1;
-      padding-right: 40px;
-    }
-    
-    .hero-text h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-    
-    .hero-text p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      max-width: 600px;
-    }
-    
-    .hero-image {
-      flex: 0 0 300px;
-      height: 300px;
-      overflow: hidden;
-      border-radius: 50%;
-      border: 5px solid white;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      background-color: #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .hero-image img {
-      width: 100%;
-      height: auto;
-    }
-    
-    .btn {
-      display: inline-block;
-      background-color: white;
-      color: var(--primary-color);
-      padding: 10px 25px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      margin-right: 15px;
-      transition: all 0.3s;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    
-    .btn-outline {
-      background-color: transparent;
-      border: 2px solid white;
-      color: white;
-    }
-    
-    .btn-outline:hover {
-      background-color: white;
-      color: var(--primary-color);
-    }
-    
-    /* Skills section */
-    .section {
-      padding: 80px 0;
-    }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
-      position: relative;
-    }
-    
-    .section-title h2 {
-      font-size: 2rem;
-      color: var(--secondary-color);
-      display: inline-block;
-    }
-    
-    .section-title h2:after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 3px;
-      background-color: var(--primary-color);
-      margin: 10px auto 0;
-    }
-    
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 30px;
-    }
-    
-    .skill-card {
-      background-color: white;
-      padding: 30px;
-      border-radius: var(--border-radius);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    
-    .skill-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-    }
-    
-    .skill-icon {
-      color: var(--primary-color);
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    
-    .skill-card h3 {
-      margin-bottom: 15px;
-      color: var(--secondary-color);
-    }
-    
-    /* Experience section */
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .timeline:before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      width: 2px;
-      height: 100%;
-      background-color: #e0e0e0;
-      transform: translateX(-50%);
-    }
-    
-    .timeline-item {
-      position: relative;
-      margin-bottom: 50px;
-    }
-    
-    .timeline-item:last-child {
-      margin-bottom: 0;
-    }
-    
-    .timeline-item:nth-child(odd) .timeline-content {
-      margin-right: 50px;
-      text-align: right;
-    }
-    
-    .timeline-item:nth-child(even) .timeline-content {
-      margin-left: 50px;
-    }
-    
-    .timeline-content {
-      position: relative;
-      width: calc(50% - 25px);
-      padding: 20px;
-      background-color: white;
-      border-radius: var(--border-radius);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    }
-    
-    .timeline-date {
-      display: inline-block;
-      padding: 5px 10px;
-      background-color: var(--primary-color);
-      color: white;
-      border-radius: 5px;
-      font-size: 0.8rem;
-      margin-bottom: 10px;
-    }
-    
-    .timeline-item:nth-child(odd) {
-      display: flex;
-      justify-content: flex-end;
-    }
-    
-    .timeline-item:nth-child(even) {
-      display: flex;
-      justify-content: flex-start;
-    }
-    
-    .timeline-dot {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: var(--primary-color);
-      border-radius: 50%;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1;
-    }
-    
-    /* Company links and tooltips */
-    .company-link {
-      text-decoration: none;
-      color: var(--primary-color);
-      font-weight: 600;
-      position: relative;
-    }
-    
-    .company-link:hover {
-      text-decoration: underline;
-    }
-    
-    .tooltip {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .tooltip .tooltip-text {
-      visibility: hidden;
-      width: 250px;
-      background-color: var(--secondary-color);
-      color: white;
-      text-align: center;
-      border-radius: 6px;
-      padding: 10px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      font-size: 0.85rem;
-      font-weight: normal;
-    }
-    
-    .tooltip .tooltip-text::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: var(--secondary-color) transparent transparent transparent;
-    }
-    
-    .tooltip:hover .tooltip-text {
-      visibility: visible;
-      opacity: 1;
-    }
-    
-    /* Education section */
-    .education-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .education-card {
-      background-color: white;
-      padding: 30px;
-      border-radius: var(--border-radius);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    }
-    
-    .education-card h3 {
-      color: var(--secondary-color);
-      margin-bottom: 10px;
-    }
-    
-    .education-card p {
-      margin-bottom: 5px;
-      color: #666;
-    }
-    
-    /* Contact section */
-    .contact-section {
-      background-color: var(--dark-bg);
-      color: var(--light-text);
-    }
-    
-    .contact-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .contact-info p {
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .contact-info i {
-      margin-right: 10px;
-      color: var(--primary-color);
-    }
-    
-    .contact-info a {
-      color: var(--light-text);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    
-    .contact-info a:hover {
-      color: var(--primary-color);
-    }
-    
-    /* Footer */
-    footer {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 30px 0;
-      text-align: center;
-    }
-    
-    .social-icons {
-      margin-bottom: 20px;
-    }
-    
-    .social-icons a {
-      color: white;
-      margin: 0 10px;
-      font-size: 1.5rem;
-      transition: color 0.3s;
-    }
-    
-    .social-icons a:hover {
-      color: var(--primary-color);
-    }
-    
-    /* Media queries */
-    @media (max-width: 992px) {
-      .hero-content {
-        flex-direction: column-reverse;
-        text-align: center;
-      }
-      
-      .hero-text {
-        padding-right: 0;
-        margin-top: 30px;
-      }
-      
-      .hero-image {
-        flex: 0 0 250px;
-        height: 250px;
-      }
-      
-      .timeline:before {
-        left: 30px;
-      }
-      
-      .timeline-item:nth-child(odd) .timeline-content,
-      .timeline-item:nth-child(even) .timeline-content {
-        width: calc(100% - 80px);
-        margin-left: 80px;
-        text-align: left;
-      }
-      
-      .timeline-item:nth-child(odd),
-      .timeline-item:nth-child(even) {
-        justify-content: flex-start;
-      }
-      
-      .timeline-dot {
-        left: 30px;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .header-container {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .logo {
-        margin-bottom: 20px;
-      }
-      
-      .nav-menu {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .nav-menu li {
-        margin: 10px 0;
-        margin-left: 0;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-      }
-      
-      .nav-menu {
-        display: none;
-      }
-      
-      .nav-menu.active {
-        display: flex;
-        width: 100%;
-        padding: 20px 0;
-      }
-    }
-  </style>
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
 </head>
 <body>
-  <!-- Header -->
-  <header id="header">
-    <div class="container header-container">
-      <div class="logo">
-        <div class="logo-circle">VK</div>
-        <h2>Vikash Kumar</h2>
-      </div>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-      <ul class="nav-menu">
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li> 
-        <li><a href="#education">Education</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+<header id="header">
+  <div class="container header-container">
+    <div class="logo">
+      <div class="logo-circle">VK</div>
+      <h2>Vikash Kumar</h2>
     </div>
-  </header>
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <ul class="nav-menu">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+  </div>
+</header>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="container hero-content">
-      <div class="hero-text">
-        <h1>ADAS Embedded Software Engineer</h1>
-        <p>With 4.5+ years of software development experience, currently developing safety-critical automotive software at Ford Motor Company.</p>
-        <div class="hero-buttons">
-          <a href="#contact" class="btn">Contact Me</a>
-          <a href="#skills" class="btn btn-outline">My Skills</a>
-        </div>
-      </div>
-      <div class="hero-image">
-        <img src="vkimage.png" alt="Professional headshot">
-      </div>
+<section class="hero" id="home">
+  <div class="container hero-content">
+    <div class="hero-text">
+      <h1>ADAS Embedded Software Engineer</h1>
+      <p>With 4.5+ years of software development experience, currently developing safety-critical automotive software at Ford Motor Company.</p>
     </div>
-  </section>
-
-  <!-- What I Do Section -->
-  <section class="section" id="skills">
-    <div class="container">
-      <div class="section-title">
-        <h2>Technical Skills</h2>
-      </div>
-      <div class="skills-container">
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-code"></i>
-          </div>
-          <h3>Languages & Frameworks</h3>
-          <p>MATLAB, C++, Python, QT, Squish, JavaScript, NoSQL, HTML, SQL</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-microchip"></i>
-          </div>
-          <h3>Embedded Systems & OS</h3>
-          <p>ROS, AOS, Firmware, Switch, Autosar, EDA</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-network-wired"></i>
-          </div>
-          <h3>Network & Security</h3>
-          <p>SNMP, TR101, TCP/IP, UDP, DHCP4, HTTPS</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-tools"></i>
-          </div>
-          <h3>Tools & Practices</h3>
-          <p>MySQL, Git, Perforce, Jenkins, Agile, GDB, Microsoft Threat Modeling</p>
-        </div>
+    <div class="hero-image">
+      <img src="vkimage.png" alt="Professional headshot" />
+    </div>
+    <div class="hero-contact">
+      <h3>Contact Me</h3>
+      <p><i class="fas fa-map-marker-alt"></i> Michigan, United States</p>
+      <p><i class="fas fa-phone"></i> +1 (414) 628-5308</p>
+      <p><i class="fas fa-envelope"></i> <a href="mailto:vkuma186@ford.com">vkuma186@ford.com</a></p>
+      <p><i class="fas fa-envelope"></i> <a href="mailto:vikashkuwm@gmail.com">vikashkuwm@gmail.com</a></p>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/vikashkumar097/" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-linkedin"></i> LinkedIn Access
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Experience Section -->
-  <section class="section" id="experience">
-    <div class="container">
-      <div class="section-title">
-        <h2>Professional Experience</h2>
+<section class="section" id="skills">
+  <div class="container">
+    <h2>Technical Skills</h2>
+    <div class="skills-container">
+      <div class="skill-card">
+        <i class="fas fa-code skill-icon"></i>
+        <h3>Languages & Frameworks</h3>
+        <p>MATLAB, C++, Python, QT, Squish, JavaScript, NoSQL, HTML, SQL</p>
       </div>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-content">
+      <div class="skill-card">
+        <i class="fas fa-microchip skill-icon"></i>
+        <h3>Embedded Systems & OS</h3>
+        <p>ROS, AOS, Firmware, Switch, Autosar, EDA</p>
+      </div>
+      <div class="skill-card">
+        <i class="fas fa-network-wired skill-icon"></i>
+        <h3>Network & Security</h3>
+        <p>SNMP, TR101, TCP/IP, UDP, DHCP4, HTTPS</p>
+      </div>
+      <div class="skill-card">
+        <i class="fas fa-tools skill-icon"></i>
+        <h3>Tools & Practices</h3>
+        <p>MySQL, Git, Perforce, Jenkins, Agile, GDB, Microsoft Threat Modeling</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="container">
+    <h2>Professional Experience</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-title">
             <span class="timeline-date">August 2024 - Current</span>
             <h3>ADAS Embedded Software Engineer</h3>
-            <h4 class="tooltip">
-              <a href="https://www.ford.com/" target="_blank" class="company-link">Ford</a>
-              <span class="tooltip-text">Ford Motor Company is a global automotive manufacturer that designs, manufactures, markets, and services a full line of cars, trucks, SUVs, and electric vehicles.</span>
+            <h4>
+              <a href="https://www.ford.com/" target="_blank" rel="noopener noreferrer" title="Ford Motor Company: Global automotive manufacturer focused on smart, sustainable vehicles.">Ford, Dearborn, MI</a>
             </h4>
-            <p>Developing features to enhance vehicle safety and automation, owning features for Contextual Awareness and HMIA.</p>
           </div>
-          <div class="timeline-dot"></div>
+          <div class="timeline-details">
+            <ul>
+              <li>Develop features to enhance vehicle safety and automation, owning features for Contextual Awareness and Human Machine Interaction Abstraction (HMIA).</li>
+              <li>Utilize MATLAB for algorithm development, simulation, and control logic implementation.</li>
+              <li>Apply object-oriented design principles, C++ STL, and advanced design patterns to improve software performance and reliability.</li>
+              <li>Test and validate features on benches, Hardware-in-the-Loop (HIL) systems, and prototype vehicles.</li>
+            </ul>
+          </div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-title">
             <span class="timeline-date">May 2023 - May 2024</span>
             <h3>Software Engineering Intern</h3>
-            <h4 class="tooltip">
-              <a href="https://www.cadence.com/en_US/home.html" target="_blank" class="company-link">Cadence Design Systems</a>
-              <span class="tooltip-text">Cadence Design Systems is a leading electronic design automation software and engineering services company that develops software used to design integrated circuits, boards, and systems.</span>
+            <h4>
+              <a href="https://www.cadence.com/en_US/home.html" target="_blank" rel="noopener noreferrer" title="Cadence Design Systems: Electronic design automation and software development tools provider.">Cadence Design Systems, Remote</a>
             </h4>
-            <p>Enhanced Clarity 3D Solver tool performance and implemented a new search feature using Azure OpenAI and GPT.</p>
           </div>
-          <div class="timeline-dot"></div>
+          <div class="timeline-details">
+            <ul>
+              <li>Enhanced and extended Clarity 3D Solver "Electronic Design Automation" tool's performance by optimizing and expanding C++17 and C++20 codebase (Full-time: May–Aug 2023, Part-time: Sept–Dec 2023, Feb–May 2024).</li>
+              <li>Implemented a new search feature using Azure OpenAI and GPT, increasing search accuracy from 75% to 95%.</li>
+              <li>Verified the tool by developing a testing environment with automated test execution.</li>
+            </ul>
+          </div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-title">
             <span class="timeline-date">January 2023 - May 2023</span>
             <h3>Teaching Assistant</h3>
-            <h4 class="tooltip">
-              <a href="https://uwm.edu/" target="_blank" class="company-link">University of Wisconsin Milwaukee</a>
-              <span class="tooltip-text">The University of Wisconsin-Milwaukee is a public urban research university offering 195+ degree programs across 15 schools and colleges, with a focus on research and innovation.</span>
+            <h4>
+              <a href="https://uwm.edu/" target="_blank" rel="noopener noreferrer" title="University of Wisconsin Milwaukee: Public research university offering diverse academic programs.">University of Wisconsin Milwaukee, Milwaukee, WI</a>
             </h4>
-            <p>Taught system programming with Unix/Linux: system calls, file I/O, IPC, and debugging in C.</p>
           </div>
-          <div class="timeline-dot"></div>
+          <div class="timeline-details">
+            <ul>
+              <li>Instructed system programming with Unix/Linux, covering system calls, file I/O, process creation and synchronization, memory management, inter-process communication (IPC), and debugging techniques in C.</li>
+            </ul>
+          </div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-title">
             <span class="timeline-date">August 2021 - August 2022</span>
             <h3>Software Engineer</h3>
-            <h4 class="tooltip">
-              <a href="https://www.capgemini.com/" target="_blank" class="company-link">Capgemini Engineering</a>
-              <span class="tooltip-text">Capgemini Engineering is a global leader in engineering and R&D services, providing expertise in digital transformation, product design, and manufacturing engineering across industries.</span>
+            <h4>
+              <a href="https://www.capgemini.com/" target="_blank" rel="noopener noreferrer" title="Capgemini Engineering: Global leader in consulting, technology services, and digital transformation.">Capgemini Engineering, Hyderabad, India</a>
             </h4>
-            <p>Collaborated with Adtran on networking equipment enhancements and deployed digitally signed firmware updates.</p>
           </div>
-          <div class="timeline-dot"></div>
+          <div class="timeline-details">
+            <ul>
+              <li>Collaborated with Adtran to enhance networking and communications equipment.</li>
+              <li>Designed and deployed signed firmware (digital signature) feature, ensuring trusted BIOS updates for devices.</li>
+              <li>Improved hardware management system, addressing issues related to temperature sensors and device LED status.</li>
+              <li>Worked on multiple SAFe and SCRUM projects, including new joiner training and onboarding initiatives.</li>
+            </ul>
+          </div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-title">
             <span class="timeline-date">October 2019 - July 2021</span>
             <h3>Software Engineer</h3>
-            <h4 class="tooltip">
-              <a href="https://www.incedoinc.com/" target="_blank" class="company-link">Incedo</a>
-              <span class="tooltip-text">Incedo is a technology consulting and services firm specializing in data management, analytics, digital transformation, and product engineering solutions for various industries.</span>
+            <h4>
+              <a href="https://www.incedoinc.com/" target="_blank" rel="noopener noreferrer" title="Incedo: Technology solutions company specializing in digital transformation and analytics.">Incedo, Gurgaon, India</a>
             </h4>
-            <p>Worked with Belden on networking product development and implemented private VLAN capability.</p>
           </div>
-          <div class="timeline-dot"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Education Section -->
-  <section class="section" id="education">
-    <div class="container">
-      <div class="section-title">
-        <h2>Education</h2>
-      </div>
-      <div class="education-container">
-        <div class="education-card">
-          <h3>MS in Computer Science</h3>
-          <p><strong>University of Wisconsin Milwaukee</strong></p>
-          <p>September 2022 – May 2024</p>
-          <p>Milwaukee, WI, USA</p>
-        </div>
-        <div class="education-card">
-          <h3>BE in Computer Science</h3>
-          <p><strong>Rustamji Institute of Technology</strong></p>
-          <p>August 2015 – May 2019</p>
-          <p>MP, India</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Career Highlights Section -->
-  <section class="section">
-    <div class="container">
-      <div class="section-title">
-        <h2>Career Highlights</h2>
-      </div>
-      <div class="skills-container">
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-award"></i>
+          <div class="timeline-details">
+            <ul>
+              <li>Worked with Belden to develop and improve networking products.</li>
+              <li>Developed and integrated new features for switches/routers to meet updated hardware specifications.</li>
+              <li>Successfully implemented private VLAN capability, enhancing network security and segmentation.</li>
+            </ul>
           </div>
-          <h3>Recognition</h3>
-          <p>Received "Made a Difference" award for impactful contributions at work.</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-lightbulb"></i>
-          </div>
-          <h3>Innovation</h3>
-          <p>Developed innovative feature using NLP + OpenAI, contributing to three internship offers.</p>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">
-            <i class="fas fa-thumbs-up"></i>
-          </div>
-          <h3>Recommendations</h3>
-          <p>Received positive feedback from colleagues and supervisors throughout career.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Contact Section -->
-  <section class="section contact-section" id="contact">
-    <div class="container">
-      <div class="section-title">
-        <h2>Get In Touch</h2>
+<section class="section" id="education">
+  <div class="container">
+    <h2>Education</h2>
+    <div class="education-container">
+      <div class="education-card">
+        <h3>MS in Computer Science</h3>
+        <p><strong>University of Wisconsin Milwaukee</strong></p>
+        <p>Sep 2022 – May 2024</p>
+        <p>Milwaukee, WI, USA</p>
       </div>
-      <div class="contact-container">
-        <div class="contact-info">
-          <h3>Contact Information</h3>
-          <p><i class="fas fa-map-marker-alt"></i> Michigan, United States</p>
-          <p><i class="fas fa-phone"></i> +1 (414) 628-5308</p>
-          <p><i class="fas fa-envelope"></i> <a href="mailto:vkuma186@ford.com">vkuma186@ford.com</a></p>
-          <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/vikashkumar097/" target="_blank">linkedin.com/in/vikashkumar097</a></p>
-        </div>
+      <div class="education-card">
+        <h3>BE in Computer Science</h3>
+        <p><strong>Rustamji Institute of Technology</strong></p>
+        <p>Aug 2015 – May 2019</p>
+        <p>MP, India</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
+<section class="section">
+  <div class="container">
+    <h2>Career Highlights</h2>
+    <div class="skills-container">
+      <div class="skill-card">
+        <i class="fas fa-award skill-icon"></i>
+        <h3>Recognition</h3>
+        <p>Received "Made a Difference" award for impactful contributions at work.</p>
       </div>
-      <p>&copy; 2025 Vikash Kumar. All Rights Reserved.</p>
+      <div class="skill-card">
+        <i class="fas fa-lightbulb skill-icon"></i>
+        <h3>Innovation</h3>
+        <p>Developed innovative feature using NLP + OpenAI, contributing to three internship offers.</p>
+      </div>
+      <div class="skill-card">
+        <i class="fas fa-thumbs-up skill-icon"></i>
+        <h3>Recommendations</h3>
+        <p>Received positive feedback from colleagues and supervisors throughout career.</p>
+      </div>
     </div>
-  </footer>
-
-  <!-- JavaScript -->
-  <script>
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('.nav-menu');
-
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-    });
-
-    // Active link on scroll
-    document.addEventListener('DOMContentLoaded', () => {
-      const sections = document.querySelectorAll('section');
-      const navLinks = document.querySelectorAll('.nav-menu a');
-
-      window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (scrollY >= (sectionTop - 100)) {
-            current = section.getAttribute('id');
-          }
-        });
-
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href').substring(1) === current) {
-            link.classList.add('active');
-          }
-        });
-      });
-    });
-  </script>
-</body>
-</html>
+  </div>
+</section>
