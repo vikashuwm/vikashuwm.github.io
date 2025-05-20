@@ -148,8 +148,8 @@ header {
   .hero-text p {
     font-size: 1rem;
     margin-bottom: 30px;
-    max-width: 600px;
-    color: black; /* Make paragraph text blue too */
+    max-width: 800px;
+    color: rgb(36, 35, 35); /* Make paragraph text blue too */
   }
   
   .hero-text .cta-button {
