@@ -269,7 +269,7 @@ header {
 }
 
 h2, h3, h4, .timeline-date {
-  text-align: left !important;
+  text-align: center !important;
 }
 
 .timeline-content {
@@ -427,27 +427,50 @@ h2, h3, h4, .timeline-date {
 
 /* Education section */
 .education-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.education-card {
-  background-color: white;
-  padding: 30px;
-  border-radius: var(--border-radius);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.education-card h3 {
-  color: var(--secondary-color);
-  margin-bottom: 10px;
-}
-
-.education-card p {
-  margin-bottom: 5px;
-  color: #666;
-}
+    position: relative;
+    max-width: 700px;  /* Adjust width as needed */
+    margin: 0 auto;
+    padding-left: 40px; /* space for the timeline line */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  /* vertical timeline line */
+  .education-container::before {
+    content: "";
+    position: absolute;
+    left: 20px;  /* position of the timeline line */
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+  }
+  
+  /* Education card with dot */
+  .education-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    width: 100%;
+  }
+  
+  /* Timeline dot */
+  .education-card::before {
+    content: "";
+    position: absolute;
+    left: -40px; /* place the dot to the left of the card */
+    top: 30px;   /* align vertically (adjust as needed) */
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    border: 3px solid white; /* white border around the dot */
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }  
 
 /* Contact section */
 .contact-section {
@@ -576,3 +599,30 @@ h2, h3, h4, .timeline-date {
     padding: 20px 0;
   }
 }
+.recommendations-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .recommendation-card {
+    width: 450px; /* Increased from 300px */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .recommendation-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .recommendation-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
