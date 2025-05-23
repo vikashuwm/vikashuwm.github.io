@@ -626,3 +626,35 @@ h2, h3, h4, .timeline-date {
   html {
     scroll-behavior: smooth;
   }
+  .feature-preview {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-preview:hover {
+    background-color: #eef6ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .feature-thumbnail {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .feature-caption {
+    font-size: 0.9em;
+    color: #007BFF;
+    font-weight: 500;
+  }
+  

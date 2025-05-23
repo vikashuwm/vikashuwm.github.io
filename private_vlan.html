@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private VLANs Explained</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4facfe;
+        }
+        
+        .content-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        .diagram-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .vlan-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .vlan-card {
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .vlan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .primary-vlan {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .isolated-vlan {
+            background: linear-gradient(135deg, #f39c12, #d68910);
+            color: white;
+        }
+        
+        .community-vlan {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: white;
+        }
+        
+        .vlan-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .vlan-card p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .benefit-item {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid #4facfe;
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .benefit-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .use-cases {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .use-cases h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .use-case-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .use-case-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .interactive-demo {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .demo-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .demo-btn.primary { background: #3498db; color: white; }
+        .demo-btn.isolated { background: #f39c12; color: white; }
+        .demo-btn.community { background: #27ae60; color: white; }
+        
+        .demo-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .demo-output {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border-left: 4px solid #4facfe;
+            text-align: left;
+            min-height: 80px;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .vlan-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Private VLANs Explained</h1>
+            <p>Understanding Network Segmentation and Security</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>What is a Private VLAN?</h2>
+            <p>A Private VLAN is a network segmentation technique that allows you to create isolated broadcast domains within a single VLAN. This provides enhanced security by controlling which devices can communicate with each other, even if they're on the same subnet.</p>
+            
+            <p>Private VLANs are particularly useful in environments where you need to provide network access to multiple tenants or departments while maintaining strict isolation between them.</p>
+        </div>
+        
+        <div class="diagram-container">
+            <h2 style="margin-bottom: 20px; color: #2c3e50;">Private VLAN Architecture</h2>
+            <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background -->
+                <rect width="800" height="600" fill="#f8f9fa"/>
+                
+                <!-- Title -->
+                <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">Private VLAN Architecture</text>
+                
+                <!-- Primary VLAN Container -->
+                <rect x="50" y="60" width="700" height="520" fill="#e8f4fd" stroke="#3498db" stroke-width="3" rx="10"/>
+                <text x="60" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2980b9">Primary VLAN (VLAN 100)</text>
+                
+                <!-- Router/Gateway (Promiscuous Port) -->
+                <rect x="350" y="110" width="100" height="60" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="5"/>
+                <text x="400" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Router</text>
+                <text x="400" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Promiscuous</text>
+                <text x="400" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">Port</text>
+                
+                <!-- Isolated VLAN Section -->
+                <rect x="80" y="200" width="280" height="180" fill="#fff3cd" stroke="#f39c12" stroke-width="2" rx="8"/>
+                <text x="90" y="220" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#d68910">Isolated VLAN (VLAN 101)</text>
+                
+                <!-- Isolated VLAN Devices -->
+                <rect x="110" y="240" width="60" height="50" fill="#ffd93d" stroke="#f39c12" stroke-width="1" rx="3"/>
+                <text x="140" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#8b4513">Server A</text>
+                <text x="140" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#8b4513">Isolated</text>
+                
+                <rect x="200" y="240" width="60" height="50" fill="#ffd93d" stroke="#f39c12" stroke-width="1" rx="3"/>
+                <text x="230" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#8b4513">Server B</text>
+                <text x="230" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#8b4513">Isolated</text>
+                
+                <rect x="290" y="240" width="60" height="50" fill="#ffd93d" stroke="#f39c12" stroke-width="1" rx="3"/>
+                <text x="320" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#8b4513">Server C</text>
+                <text x="320" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#8b4513">Isolated</text>
+                
+                <!-- Isolated VLAN Rules -->
+                <text x="90" y="315" font-family="Arial, sans-serif" font-size="11" fill="#8b4513">✓ Can communicate with Router</text>
+                <text x="90" y="330" font-family="Arial, sans-serif" font-size="11" fill="#8b4513">✗ Cannot communicate with each other</text>
+                <text x="90" y="345" font-family="Arial, sans-serif" font-size="11" fill="#8b4513">✗ Cannot communicate with Community VLANs</text>
+                
+                <!-- Community VLAN 1 Section -->
+                <rect x="440" y="200" width="140" height="130" fill="#d5ead5" stroke="#27ae60" stroke-width="2" rx="8"/>
+                <text x="450" y="220" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e8449">Community VLAN 1</text>
+                <text x="450" y="235" font-family="Arial, sans-serif" font-size="12" fill="#1e8449">(VLAN 102)</text>
+                
+                <!-- Community VLAN 1 Devices -->
+                <rect x="450" y="250" width="50" height="40" fill="#90ee90" stroke="#27ae60" stroke-width="1" rx="3"/>
+                <text x="475" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#2d5016">PC 1</text>
+                <text x="475" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#2d5016">HR Dept</text>
+                
+                <rect x="520" y="250" width="50" height="40" fill="#90ee90" stroke="#27ae60" stroke-width="1" rx="3"/>
+                <text x="545" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#2d5016">PC 2</text>
+                <text x="545" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#2d5016">HR Dept</text>
+                
+                <!-- Community VLAN 1 Rules -->
+                <text x="450" y="310" font-family="Arial, sans-serif" font-size="10" fill="#2d5016">✓ Can communicate with Router</text>
+                <text x="450" y="322" font-family="Arial, sans-serif" font-size="10" fill="#2d5016">✓ Can communicate within community</text>
+                
+                <!-- Community VLAN 2 Section -->
+                <rect x="600" y="200" width="140" height="130" fill="#f4d6f4" stroke="#8e44ad" stroke-width="2" rx="8"/>
+                <text x="610" y="220" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#6c3483">Community VLAN 2</text>
+                <text x="610" y="235" font-family="Arial, sans-serif" font-size="12" fill="#6c3483">(VLAN 103)</text>
+                
+                <!-- Community VLAN 2 Devices -->
+                <rect x="610" y="250" width="50" height="40" fill="#dda0dd" stroke="#8e44ad" stroke-width="1" rx="3"/>
+                <text x="635" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#4a235a">PC 3</text>
+                <text x="635" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#4a235a">IT Dept</text>
+                
+                <rect x="680" y="250" width="50" height="40" fill="#dda0dd" stroke="#8e44ad" stroke-width="1" rx="3"/>
+                <text x="705" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#4a235a">PC 4</text>
+                <text x="705" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#4a235a">IT Dept</text>
+                
+                <!-- Community VLAN 2 Rules -->
+                <text x="610" y="310" font-family="Arial, sans-serif" font-size="10" fill="#4a235a">✓ Can communicate with Router</text>
+                <text x="610" y="322" font-family="Arial, sans-serif" font-size="10" fill="#4a235a">✓ Can communicate within community</text>
+                
+                <!-- Communication Lines -->
+                <!-- Router to Isolated VLAN (allowed) -->
+                <line x1="380" y1="170" x2="220" y2="240" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,5"/>
+                
+                <!-- Router to Community VLANs (allowed) -->
+                <line x1="420" y1="170" x2="500" y2="240" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,5"/>
+                <line x1="420" y1="170" x2="660" y2="240" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,5"/>
+                
+                <!-- Blocked communications -->
+                <!-- Between isolated devices -->
+                <line x1="170" y1="265" x2="200" y2="265" stroke="#e74c3c" stroke-width="2"/>
+                <text x="185" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#e74c3c">✗</text>
+                
+                <!-- Between community VLANs -->
+                <line x1="580" y1="270" x2="600" y2="270" stroke="#e74c3c" stroke-width="2"/>
+                <text x="590" y="265" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#e74c3c">✗</text>
+                
+                <!-- Between isolated and community -->
+                <line x1="360" y1="265" x2="440" y2="265" stroke="#e74c3c" stroke-width="2"/>
+                <text x="400" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#e74c3c">✗</text>
+                
+                <!-- Legend -->
+                <rect x="80" y="420" width="640" height="140" fill="white" stroke="#bdc3c7" stroke-width="1" rx="5"/>
+                <text x="90" y="440" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Communication Rules:</text>
+                
+                <line x1="90" y1="460" x2="110" y2="460" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="120" y="465" font-family="Arial, sans-serif" font-size="12" fill="#27ae60">Allowed Communication (to Router)</text>
+                
+                <line x1="90" y1="480" x2="110" y2="480" stroke="#e74c3c" stroke-width="2"/>
+                <text x="120" y="485" font-family="Arial, sans-serif" font-size="12" fill="#e74c3c">Blocked Communication</text>
+                
+                <!-- Port Types -->
+                <text x="400" y="440" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Port Types:</text>
+                <text x="400" y="460" font-family="Arial, sans-serif" font-size="12" fill="#e74c3c">• Promiscuous Port: Can communicate with all VLANs</text>
+                <text x="400" y="475" font-family="Arial, sans-serif" font-size="12" fill="#f39c12">• Isolated Port: Only communicates with promiscuous ports</text>
+                <text x="400" y="490" font-family="Arial, sans-serif" font-size="12" fill="#27ae60">• Community Port: Communicates within community + promiscuous</text>
+                
+                <!-- Key Benefits -->
+                <text x="90" y="520" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Benefits:</text>
+                <text x="90" y="540" font-family="Arial, sans-serif" font-size="12" fill="#34495e">• Enhanced security through traffic isolation</text>
+                <text x="90" y="555" font-family="Arial, sans-serif" font-size="12" fill="#34495e">• Efficient use of IP address space (single subnet)</text>
+            </svg>
+        </div>
+        
+        <div class="content-section">
+            <h2>VLAN Types Breakdown</h2>
+            <div class="vlan-types">
+                <div class="vlan-card primary-vlan" onclick="highlightVlan('primary')">
+                    <h3>Primary VLAN</h3>
+                    <p>The main container VLAN that encompasses all secondary VLANs. It provides the overall IP subnet and acts as the parent for all sub-VLANs within the private VLAN structure.</p>
+                </div>
+                
+                <div class="vlan-card isolated-vlan" onclick="highlightVlan('isolated')">
+                    <h3>Isolated VLAN</h3>
+                    <p>Devices in isolated VLANs can only communicate with promiscuous ports (like routers or gateways). They are completely isolated from each other and from community VLANs.</p>
+                </div>
+                
+                <div class="vlan-card community-vlan" onclick="highlightVlan('community')">
+                    <h3>Community VLAN</h3>
+                    <p>Devices within the same community VLAN can communicate with each other and with promiscuous ports, but cannot communicate with other communities or isolated VLANs.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="interactive-demo">
+            <h2>Interactive Communication Demo</h2>
+            <p>Click on the buttons below to see how different VLAN types can communicate:</p>
+            
+            <div class="demo-buttons">
+                <button class="demo-btn primary" onclick="showDemo('primary')">Primary VLAN</button>
+                <button class="demo-btn isolated" onclick="showDemo('isolated')">Isolated VLAN</button>
+                <button class="demo-btn community" onclick="showDemo('community')">Community VLAN</button>
+            </div>
+            
+            <div class="demo-output" id="demoOutput">
+                <p>Select a VLAN type above to see its communication capabilities...</p>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>Key Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h4>🔒 Enhanced Security</h4>
+                    <p>Isolate different tenants or departments while maintaining network connectivity through controlled access points.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>🌐 Efficient IP Usage</h4>
+                    <p>Use a single IP subnet for multiple isolated groups, reducing IP address waste and simplifying network management.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>⚡ Simplified Management</h4>
+                    <p>Manage multiple isolated networks within a single VLAN structure, reducing configuration complexity.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <h4>🏢 Multi-tenancy Support</h4>
+                    <p>Perfect for service providers who need to offer isolated network services to multiple customers.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="use-cases">
+            <h2>Common Use Cases</h2>
+            <div class="use-case-list">
+                <div class="use-case-item">
+                    <h4>🏨 Hotel Networks</h4>
+                    <p>Isolate guest rooms from each other while allowing internet access through a central gateway.</p>
+                </div>
+                
+                <div class="use-case-item">
+                    <h4>🏢 Corporate Departments</h4>
+                    <p>Separate HR, Finance, and IT departments while maintaining centralized services.</p>
+                </div>
+                
+                <div class="use-case-item">
+                    <h4>☁️ Cloud Service Providers</h4>
+                    <p>Isolate different customer environments in shared infrastructure.</p>
+                </div>
+                
+                <div class="use-case-item">
+                    <h4>🏭 Industrial Networks</h4>
+                    <p>Separate operational technology (OT) devices while maintaining monitoring capabilities.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>Configuration Summary</h2>
+            <p>To implement Private VLANs, you typically need to:</p>
+            <ol style="margin: 20px 0; padding-left: 30px; line-height: 2;">
+                <li><strong>Create the Primary VLAN:</strong> This serves as the container for all secondary VLANs</li>
+                <li><strong>Configure Secondary VLANs:</strong> Set up isolated and community VLANs as needed</li>
+                <li><strong>Assign Port Types:</strong> Configure promiscuous, isolated, and community ports</li>
+                <li><strong>Map VLANs to Ports:</strong> Associate secondary VLANs with their respective ports</li>
+                <li><strong>Configure the Gateway:</strong> Set up the router or gateway on the promiscuous port</li>
+            </ol>
+            
+            <p>Private VLANs provide a powerful way to enhance network security and efficiency, making them essential for modern network designs that require isolation with controlled connectivity.</p>
+        </div>
+    </div>
+
+    <script>
+        function highlightVlan(type) {
+            const cards = document.querySelectorAll('.vlan-card');
+            cards.forEach(card => {
+                card.style.transform = 'scale(1)';
+                card.style.boxShadow = 'none';
+            });
+            
+            const selectedCard = document.querySelector(`.${type}-vlan`);
+            selectedCard.style.transform = 'scale(1.05)';
+            selectedCard.style.boxShadow = '0 20px 40px rgba(0,0,0,0.3)';
+            
+            setTimeout(() => {
+                selectedCard.style.transform = 'scale(1)';
+                selectedCard.style.boxShadow = 'none';
+            }, 2000);
+        }
+        
+        function showDemo(type) {
+            const output = document.getElementById('demoOutput');
+            let content = '';
+            
+            switch(type) {
+                case 'primary':
+                    content = `
+                        <h4>Primary VLAN Communication</h4>
+                        <p><strong>✅ Can communicate with:</strong> All devices within the primary VLAN structure</p>
+                        <p><strong>🔧 Role:</strong> Acts as the parent container for all secondary VLANs</p>
+                        <p><strong>📡 Function:</strong> Provides the IP subnet and routing capabilities for the entire private VLAN</p>
+                    `;
+                    break;
+                case 'isolated':
+                    content = `
+                        <h4>Isolated VLAN Communication</h4>
+                        <p><strong>✅ Can communicate with:</strong> Promiscuous ports (routers, gateways) only</p>
+                        <p><strong>❌ Cannot communicate with:</strong> Other isolated devices, community VLANs</p>
+                        <p><strong>🔒 Security:</strong> Maximum isolation - perfect for untrusted devices or separate tenants</p>
+                        <p><strong>💡 Example:</strong> Hotel guest rooms, DMZ servers, customer devices</p>
+                    `;
+                    break;
+                case 'community':
+                    content = `
+                        <h4>Community VLAN Communication</h4>
+                        <p><strong>✅ Can communicate with:</strong> Other devices in the same community + promiscuous ports</p>
+                        <p><strong>❌ Cannot communicate with:</strong> Other communities, isolated VLANs</p>
+                        <p><strong>🤝 Collaboration:</strong> Allows teamwork within groups while maintaining isolation from others</p>
+                        <p><strong>💡 Example:</strong> Department workgroups, project teams, shared resources</p>
+                    `;
+                    break;
+            }
+            
+            output.innerHTML = content;
+            output.classList.add('fade-in');
+            
+            setTimeout(() => {
+                output.classList.remove('fade-in');
+            }, 500);
+        }
+        
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.content-section, .vlan-card, .benefit-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
